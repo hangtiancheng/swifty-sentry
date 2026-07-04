@@ -12,12 +12,8 @@ import {
 import setup from "../src/core/setup.js";
 import { EventType, SentryPlugin } from "../src/types/index.js";
 
-const fingerprintGet = vi.hoisted(() =>
-  vi.fn(() => Promise.resolve({ visitorId: "anonymous-1" })),
-);
-const fingerprintLoad = vi.hoisted(() =>
-  vi.fn(() => Promise.resolve({ get: fingerprintGet })),
-);
+const fingerprintGet = vi.hoisted(() => vi.fn(() => Promise.resolve({ visitorId: "anonymous-1" })));
+const fingerprintLoad = vi.hoisted(() => vi.fn(() => Promise.resolve({ get: fingerprintGet })));
 
 vi.mock("@fingerprintjs/fingerprintjs", () => ({
   default: {
@@ -119,9 +115,7 @@ describe("identity", () => {
         hasAnonymousId: true,
       });
     });
-    expect(localStorage.getItem("swifty_sentry_anonymous_id")).toBe(
-      "anonymous-1",
-    );
+    expect(localStorage.getItem("swifty_sentry_anonymous_id")).toBe("anonymous-1");
   });
 
   it("reuses stored anonymous identity before loading FingerprintJS", async () => {

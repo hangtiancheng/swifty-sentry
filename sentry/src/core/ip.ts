@@ -1,5 +1,4 @@
-const ipPattern =
-  /([0-9]{1,3}(?:\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){2,7})/gi;
+const ipPattern = /([0-9]{1,3}(?:\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){2,7})/gi;
 
 function collectIps(candidate: string, ips: Set<string>): void {
   const matches = candidate.match(ipPattern) ?? [];

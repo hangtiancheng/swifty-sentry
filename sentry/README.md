@@ -24,11 +24,7 @@ npm install vue
 
 ```ts
 import { init, destroy, isInitialized, pluginEnable } from "@swifty.js/sentry";
-import {
-  PerformancePlugin,
-  ScreenRecordPlugin,
-  ExposurePlugin,
-} from "@swifty.js/sentry/plugins";
+import { PerformancePlugin, ScreenRecordPlugin, ExposurePlugin } from "@swifty.js/sentry/plugins";
 import { ReactErrorBoundary } from "@swifty.js/sentry/react";
 import { vuePlugin } from "@swifty.js/sentry/vue";
 ```
@@ -39,11 +35,7 @@ Each public export provides ESM, CJS, and TypeScript declaration files.
 
 ```ts
 import { init, pluginEnable } from "@swifty.js/sentry";
-import {
-  PerformancePlugin,
-  ScreenRecordPlugin,
-  ExposurePlugin,
-} from "@swifty.js/sentry/plugins";
+import { PerformancePlugin, ScreenRecordPlugin, ExposurePlugin } from "@swifty.js/sentry/plugins";
 
 init({
   dsn: "/api/log",
@@ -439,11 +431,7 @@ await sendLocal();
 Register hooks after initialization or provide equivalent hooks in `init` options.
 
 ```ts
-import {
-  afterSendData,
-  beforePushEventList,
-  beforeSendData,
-} from "@swifty.js/sentry";
+import { afterSendData, beforePushEventList, beforeSendData } from "@swifty.js/sentry";
 
 beforeSendData((data) => {
   if (data.type === "Click") {
@@ -585,10 +573,7 @@ Unsupported browser capabilities are skipped safely.
 
 ```ts
 import { pluginEnable } from "@swifty.js/sentry";
-import {
-  ScreenRecordPlugin,
-  unzipScreenRecord,
-} from "@swifty.js/sentry/plugins";
+import { ScreenRecordPlugin, unzipScreenRecord } from "@swifty.js/sentry/plugins";
 
 pluginEnable(ScreenRecordPlugin);
 

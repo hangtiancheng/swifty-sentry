@@ -43,9 +43,7 @@ describe("declarative click and page view dwell tracking", () => {
 
     document
       .querySelector("button")
-      ?.dispatchEvent(
-        new MouseEvent("click", { bubbles: true, composed: true }),
-      );
+      ?.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
     await Promise.resolve();
 
     const payload = getSentPayload(sendBeacon.mock.calls[0] ?? []);
@@ -83,9 +81,7 @@ describe("declarative click and page view dwell tracking", () => {
 
     document
       .querySelector("span")
-      ?.dispatchEvent(
-        new MouseEvent("click", { bubbles: true, composed: true }),
-      );
+      ?.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
     await Promise.resolve();
 
     const payload = getSentPayload(sendBeacon.mock.calls[0] ?? []);

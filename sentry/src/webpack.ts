@@ -2,12 +2,7 @@
 
 import { Buffer } from "node:buffer";
 import { join } from "node:path";
-import {
-  createWriteStream,
-  existsSync,
-  mkdirSync,
-  type WriteStream,
-} from "node:fs";
+import { createWriteStream, existsSync, mkdirSync, type WriteStream } from "node:fs";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Compiler, WebpackPluginInstance } from "webpack";
 import type DevServer from "webpack-dev-server";
@@ -17,17 +12,10 @@ import { sentry, sentryLogger } from "./utils";
 
 /** Type predicate: safely narrow `compiler.options.devServer` to `DevServer.Configuration`. */
 function isDevServerConfig(value: unknown): value is DevServer.Configuration {
-  return (
-    value !== false &&
-    value !== undefined &&
-    value !== null &&
-    typeof value === "object"
-  );
+  return value !== false && value !== undefined && value !== null && typeof value === "object";
 }
 
-type SetupMiddlewaresFn = NonNullable<
-  DevServer.Configuration["setupMiddlewares"]
->;
+type SetupMiddlewaresFn = NonNullable<DevServer.Configuration["setupMiddlewares"]>;
 
 export type SentryDevMiddleware = (
   req: IncomingMessage,
@@ -64,10 +52,7 @@ function parseSentryPayload(body: string): unknown {
   return JSON.parse(body);
 }
 
-function createMiddleware(
-  url: string,
-  fileStream: WriteStream,
-): SentryDevMiddleware {
+function createMiddleware(url: string, fileStream: WriteStream): SentryDevMiddleware {
   return (req, res, next) => {
     if (req.url === url && req.method === "POST") {
       let body = "";
@@ -126,13 +111,9 @@ function ensureLogStream(): ILogStreamHandle {
  * };
  * ```
  */
-export function sentryMiddleware(
-  options: ISentryWebpackPluginOptions = {},
-): SentryDevMiddleware {
+export function sentryMiddleware(options: ISentryWebpackPluginOptions = {}): SentryDevMiddleware {
   const { fileStream, logFile } = ensureLogStream();
-  sentryLogger.info(
-    `Sentry mock middleware initialized, logs will be written to ${logFile}`,
-  );
+  sentryLogger.info(`Sentry mock middleware initialized, logs will be written to ${logFile}`);
   const url = options.dsn || sentry.options.dsn || "/sentry";
   return createMiddleware(url, fileStream);
 }
@@ -172,12 +153,9 @@ export class SentryWebpackPlugin implements WebpackPluginInstance {
     const url = this.dsn || sentry.options.dsn || "/sentry";
     const middleware = createMiddleware(url, fileStream);
 
-    sentryLogger.info(
-      `Sentry mock plugin initialized, logs will be written to ${logFile}`,
-    );
+    sentryLogger.info(`Sentry mock plugin initialized, logs will be written to ${logFile}`);
 
-    const userSetup: SetupMiddlewaresFn | undefined =
-      devServer.setupMiddlewares;
+    const userSetup: SetupMiddlewaresFn | undefined = devServer.setupMiddlewares;
     devServer.setupMiddlewares = (middlewares, dev) => {
       const list = userSetup ? userSetup(middlewares, dev) : middlewares;
       // NOTE: do NOT pass `path` here. webpack-dev-server's
@@ -201,9 +179,7 @@ export class SentryWebpackPlugin implements WebpackPluginInstance {
   }
 }
 
-export function sentryPlugin(
-  options: ISentryWebpackPluginOptions = {},
-): SentryWebpackPlugin {
+export function sentryPlugin(options: ISentryWebpackPluginOptions = {}): SentryWebpackPlugin {
   return new SentryWebpackPlugin(options);
 }
 

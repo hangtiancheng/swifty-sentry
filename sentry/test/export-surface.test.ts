@@ -3,9 +3,7 @@ import { describe, expect, it } from "vitest";
 import * as root from "../src/index.js";
 import ExposurePlugin from "../src/plugins/exposure/index.js";
 import PerformancePlugin from "../src/plugins/performance/index.js";
-import ScreenRecordPlugin, {
-  unzipScreenRecord,
-} from "../src/plugins/screen-record/index.js";
+import ScreenRecordPlugin, { unzipScreenRecord } from "../src/plugins/screen-record/index.js";
 import { ReactErrorBoundary } from "../src/react.js";
 import { vuePlugin } from "../src/vue.js";
 import { swiftyPlugin } from "../src/swifty.js";

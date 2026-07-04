@@ -60,9 +60,7 @@ function getFallbackFingerprint(): string {
 }
 
 function getLanguage(): string {
-  return "navigator" in globalThis
-    ? globalThis.navigator.language || UNKNOWN
-    : UNKNOWN;
+  return "navigator" in globalThis ? globalThis.navigator.language || UNKNOWN : UNKNOWN;
 }
 
 function getScreenResolution(): string {
