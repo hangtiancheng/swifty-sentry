@@ -1,13 +1,22 @@
 {
   "name": "@swifty.js/sentry",
-  "version": "0.0.10",
+  "version": "0.0.1",
   "description": "sentry sdk",
   "keywords": [
     "sdk",
     "sentry"
   ],
+  "homepage": "https://github.com/hangtiancheng/swifty-sentry/tree/main/sentry#readme",
+  "bugs": {
+    "url": "https://github.com/hangtiancheng/swifty-sentry/issues"
+  },
   "license": "MIT",
   "author": "https://github.com/hangtiancheng",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hangtiancheng/swifty-sentry.git",
+    "directory": "sentry"
+  },
   "files": [
     "dist",
     "README.md"
