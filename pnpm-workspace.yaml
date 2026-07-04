@@ -1,0 +1,17 @@
+packages:
+  - sentry
+  - client
+  - swifty.js
+  - angular
+  - server
+
+allowBuilds:
+  "@parcel/watcher": true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
+  protobufjs: true
+
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - esbuild

@@ -1,0 +1,38 @@
+{
+  "name": "swifty-sentry",
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "client",
+    "swifty.js",
+    "sentry",
+    "server"
+  ],
+  "scripts": {
+    "prepare": "husky && pnpm --filter @swifty.js/sentry build",
+    "lint": "eslint ./sentry --fix",
+    "format": "pnpm --filter @swifty.js/sentry format",
+    "client": "pnpm --filter client dev",
+    "server": "pnpm --filter server dev",
+    "dev": "concurrently \"pnpm client\" \"pnpm server\"",
+    "git:commit": "git add -A && git commit -m \"feat: Introduce new features\"",
+    "git:push": "pnpm git:commit && git push origin main"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^25.9.4",
+    "concurrently": "^10.0.3",
+    "eslint": "^9.39.4",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.62.1"
+  },
+  "lint-staged": {
+    "./sentry/*.{js,cjs,mjs,jsx,ts,tsx,html,css,scss,json}": [
+      "pnpm format"
+    ]
+  }
+}
