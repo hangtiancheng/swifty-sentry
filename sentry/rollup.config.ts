@@ -38,7 +38,6 @@ export default defineConfig([
       vue: "./src/vue.ts",
       vite: "./src/vite.ts",
       webpack: "./src/webpack.ts",
-      swifty: "./src/swifty.ts",
       "plugins/index": "./src/plugins/index.ts",
     },
     output: [
@@ -81,7 +80,6 @@ export default defineConfig([
       vue: "./src/vue.ts",
       vite: "./src/vite.ts",
       webpack: "./src/webpack.ts",
-      swifty: "./src/swifty.ts",
       "plugins/index": "./src/plugins/index.ts",
     },
     output: {
