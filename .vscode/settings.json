@@ -9,6 +9,7 @@
     "Menlo",
     "oxfmt",
     "protobufjs",
-    "rrweb"
+    "rrweb",
+    "swifty"
   ]
 }

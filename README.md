@@ -1,4 +1,4 @@
-# @swifty.js/sentry
+# Swifty Sentry
 
 `@swifty.js/sentry` is a browser monitoring and analytics SDK for page views, declarative clicks, runtime errors, resource errors, HTTP requests, performance metrics, exposure tracking, white-screen detection, offline reporting, and screen record context.
 
