@@ -2,8 +2,8 @@ import { EventType } from "../types";
 import { throttle, sentry, decorateProp, getBaseData } from "../utils";
 import type { Cleanup } from "../utils/decorate-prop.js";
 import { pub } from "./bus.js";
-import { pubFetch, pubXhr } from "./decorate-http-publish.js";
-import { pubHistory } from "./decorate-route-publish.js";
+import { pubFetch, pubXhr } from "./decorate-http.js";
+import { pubHistory } from "./decorate-route.js";
 
 function noop(): void {}
 

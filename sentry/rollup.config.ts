@@ -12,6 +12,7 @@ const external = [
   "@fingerprintjs/fingerprintjs",
   "@rrweb/record",
   "pako",
+  "preact",
   "react",
   "ua-parser-js",
   "vite",
@@ -34,6 +35,7 @@ export default defineConfig([
   {
     input: {
       index: "./src/index.ts",
+      preact: "./src/preact.ts",
       react: "./src/react.ts",
       vue: "./src/vue.ts",
       vite: "./src/vite.ts",
@@ -76,6 +78,7 @@ export default defineConfig([
   {
     input: {
       index: "./src/index.ts",
+      preact: "./src/preact.ts",
       react: "./src/react.ts",
       vue: "./src/vue.ts",
       vite: "./src/vite.ts",

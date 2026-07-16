@@ -17,12 +17,12 @@ export const deviceInfoSchema = z.object({
 
 export const reportDataSchema = z.object({
   id: z.string(),
-  type: z.nativeEnum(EventType),
+  type: z.enum(EventType),
   name: z.string(),
   time: z.string(),
   timestamp: z.number(),
   message: z.string(),
-  status: z.nativeEnum(Status),
+  status: z.enum(Status),
   url: z.string(),
   userId: z.string(),
   projectId: z.string(),

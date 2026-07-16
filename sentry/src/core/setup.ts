@@ -15,7 +15,7 @@ import {
   handleWhiteScreen,
 } from "./handlers.js";
 
-import decoratePublish from "./decorate-publish.js";
+import decoratePublish from "./decorates.js";
 
 function setup(): Cleanup {
   sentryLogger.info("Initializing SDK event subscriptions...");
