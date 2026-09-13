@@ -145,7 +145,7 @@ export class CodeBlockElement extends LitElement {
               type="button"
               onClick={() => this.handleCopy()}
               aria-label="Copy code"
-              className="border-brand-300/60 hover:border-brand-400/60 hover:text-brand-700 ml-auto inline-flex items-center gap-1.5 rounded-lg border bg-white/80 px-2.5 py-1 text-[11px] font-medium text-slate-600 transition dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:text-white"
+              className="border-brand-300/60 hover:border-brand-400/60 hover:text-brand-700 ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg border bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-600 transition dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:text-white"
             >
               <Icon
                 name={this.copied ? "check" : "copy"}

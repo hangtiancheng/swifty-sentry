@@ -83,6 +83,22 @@ export class FrameworksSectionElement extends LitElement {
     return this;
   }
 
+  // The indicator tracks each tab's offsetLeft, which changes as the tab bar
+  // reflows across breakpoints; re-seat it on resize so it never goes stale.
+  private handleResize = (): void => {
+    this.moveIndicator(false);
+  };
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    window.removeEventListener("resize", this.handleResize);
+  }
+
   protected override firstUpdated(): void {
     this.moveIndicator(false);
   }
@@ -156,7 +172,7 @@ export class FrameworksSectionElement extends LitElement {
                       type="button"
                       data-key={tab.key}
                       onClick={() => this.select(tab.key)}
-                      className="relative z-10 flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition"
+                      className="relative z-10 flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl px-2.5 py-2.5 text-xs font-bold transition sm:gap-2 sm:px-4 sm:text-sm"
                     >
                       <span
                         className={`flex items-center gap-2 ${
@@ -165,7 +181,10 @@ export class FrameworksSectionElement extends LitElement {
                             : "text-slate-600 dark:text-slate-300"
                         }`}
                       >
-                        <Icon name={tab.icon} className="size-4" />
+                        <Icon
+                          name={tab.icon}
+                          className="hidden size-4 sm:block"
+                        />
                         {tab.label}
                       </span>
                     </button>

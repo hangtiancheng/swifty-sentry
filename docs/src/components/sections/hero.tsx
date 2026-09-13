@@ -111,7 +111,7 @@ export function Hero() {
               <a
                 href="#features"
                 onClick={(event) => handleAnchorClick(event, "#features")}
-                className="group border-brand-300/60 text-brand-700 hover:border-brand-400 dark:border-brand-400/25 dark:bg-brand-500/10 dark:text-brand-200 inline-flex items-center gap-2 rounded-full border bg-white/70 py-1.5 pr-4 pl-1.5 text-xs font-semibold shadow-sm backdrop-blur transition"
+                className="group border-brand-300/60 text-brand-700 hover:border-brand-400 dark:border-brand-400/25 dark:bg-brand-500/10 dark:text-brand-200 inline-flex max-w-full items-center gap-2 rounded-full border bg-white/70 py-1.5 pr-4 pl-1.5 text-xs font-semibold shadow-sm backdrop-blur transition"
               >
                 <span className="from-brand-500 to-accent-500 inline-flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1 text-[11px] font-bold text-white">
                   <Icon name="sparkles" className="size-3" />
@@ -126,7 +126,7 @@ export function Hero() {
             </ui-reveal>
 
             <ui-reveal delay={0.05}>
-              <h1 className="mt-7 text-5xl font-black tracking-tight text-slate-900 sm:text-6xl lg:text-7xl dark:text-white">
+              <h1 className="mt-7 text-4xl font-black tracking-tight text-slate-900 sm:text-6xl lg:text-7xl dark:text-white">
                 Ship fast.
                 <br />
                 <span className="from-brand-500 via-brand-400 to-accent-500 bg-linear-to-r bg-clip-text text-transparent">

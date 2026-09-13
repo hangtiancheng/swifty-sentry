@@ -40,7 +40,7 @@ function DevCard({
 function TerminalMock() {
   return (
     <div className="font-mono text-[13px] leading-6">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <span className="text-emerald-600 dark:text-emerald-400">➜</span>
         <span className="text-brand-600 dark:text-brand-300">~</span>
         <span className="text-slate-700 dark:text-slate-200">
@@ -207,7 +207,9 @@ function OfflineMock() {
         ))}
       </div>
       <div className="bg-brand-100/40 rounded-lg p-3 font-mono text-[11px] text-slate-500 dark:bg-white/5 dark:text-slate-400">
-        <p>
+        {/* The storage key is one unbreakable token; without break-all its
+            min-content width forces the whole card past the viewport. */}
+        <p className="break-all">
           localStorage["swifty_sentry_offline_cache"]{" "}
           <span className="text-lime-600 dark:text-lime-300">· 42 events</span>
         </p>

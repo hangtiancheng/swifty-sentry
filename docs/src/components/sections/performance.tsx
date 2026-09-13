@@ -115,11 +115,11 @@ export function Performance() {
               {VITALS.map((vital, index) => (
                 <div key={vital.name}>
                   <div className="mb-1.5 flex items-baseline justify-between gap-3">
-                    <span className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
-                      <span className="text-brand-600 dark:text-brand-300 font-mono text-xs font-bold">
+                    <span className="flex min-w-0 items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
+                      <span className="text-brand-600 dark:text-brand-300 shrink-0 font-mono text-xs font-bold">
                         {vital.name}
                       </span>
-                      <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
+                      <span className="truncate text-xs font-normal text-slate-500 dark:text-slate-400">
                         {vital.label}
                       </span>
                     </span>

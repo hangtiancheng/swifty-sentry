@@ -24,7 +24,7 @@ export function CTA() {
               Five lines. Every signal.
             </loop-effect>
 
-            <h2 className="mx-auto mt-6 max-w-3xl text-4xl font-black tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
+            <h2 className="mx-auto mt-6 max-w-3xl text-3xl font-black tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
               Start catching what breaks
               <span className="from-brand-600 via-brand-500 to-accent-600 dark:from-brand-300 dark:to-accent-300 block bg-linear-to-r bg-clip-text text-transparent dark:via-white">
                 before your users tell you.

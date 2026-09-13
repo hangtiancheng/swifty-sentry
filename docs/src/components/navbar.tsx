@@ -39,9 +39,18 @@ export class NavbarElement extends LitElement {
   private menuRef = createRef<HTMLDivElement>();
   private iconRef = createRef<HTMLSpanElement>();
   private unsubscribeTheme?: () => void;
+  private desktopMedia = window.matchMedia("(min-width: 1024px)");
 
   private handleScroll = () => {
     this.scrolled = window.scrollY > 12;
+  };
+
+  // Rotating a phone/tablet into the desktop range hides the mobile menu, but
+  // the body scroll-lock would otherwise stay on and freeze the page.
+  private handleDesktopChange = () => {
+    if (this.desktopMedia.matches) {
+      this.closeMenu();
+    }
   };
 
   protected override createRenderRoot(): HTMLElement {
@@ -55,11 +64,13 @@ export class NavbarElement extends LitElement {
     });
     this.handleScroll();
     window.addEventListener("scroll", this.handleScroll, { passive: true });
+    this.desktopMedia.addEventListener("change", this.handleDesktopChange);
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     window.removeEventListener("scroll", this.handleScroll);
+    this.desktopMedia.removeEventListener("change", this.handleDesktopChange);
     this.unsubscribeTheme?.();
     document.body.style.overflow = "";
   }
@@ -176,7 +187,7 @@ export class NavbarElement extends LitElement {
               type="button"
               onClick={() => this.toggleMenu()}
               aria-label="Toggle navigation menu"
-              className="grid size-9 place-items-center rounded-xl border border-slate-900/10 text-slate-600 lg:hidden dark:border-white/10 dark:text-slate-300"
+              className="grid size-10 place-items-center rounded-xl border border-slate-900/10 text-slate-600 lg:hidden dark:border-white/10 dark:text-slate-300"
             >
               <Icon name={this.open ? "x" : "menu"} className="size-5" />
             </button>

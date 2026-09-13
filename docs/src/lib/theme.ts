@@ -21,6 +21,10 @@ class ThemeStore {
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
     root.style.colorScheme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#0a0611" : "#ffffff");
+    }
     try {
       localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
