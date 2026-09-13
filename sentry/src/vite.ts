@@ -21,10 +21,9 @@
  */
 
 // npm view vite versions
-// pnpm add -D vite7@npm:vite@7.3.3
+// pnpm add -D vite7@npm:vite@7
 // pnpm add -D vite
 
-import { type Plugin as Plugin7 } from "vite7";
 import { type Plugin } from "vite";
 import {
   closeLogStream,
@@ -68,10 +67,6 @@ function buildPlugin({ dsn }: ISentryPluginOptions) {
 }
 
 export function sentryPlugin(options: ISentryPluginOptions = {}): Plugin {
-  return buildPlugin(options);
-}
-
-export function sentryPlugin7(options: ISentryPluginOptions = {}): Plugin7 {
   return buildPlugin(options);
 }
 

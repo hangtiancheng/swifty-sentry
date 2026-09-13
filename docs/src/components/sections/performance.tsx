@@ -1,30 +1,7 @@
-import { motion, useReducedMotion } from "motion/react";
-import {
-  Activity,
-  Gauge,
-  Layers,
-  MemoryStick,
-  Route,
-  Timer,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
-
-import { CodeBlock } from "@/components/ui/code-block";
+import { Icon } from "@/components/icons/icon";
 import { Pill } from "@/components/ui/pill";
-import { Reveal, RevealItem, RevealList } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-
-const PERFORMANCE_CODE = `import { enablePlugin, tracePerformance } from "@swifty.js/sentry";
-import { PerformancePlugin } from "@swifty.js/sentry/plugins";
-
-enablePlugin(new PerformancePlugin());
-
-tracePerformance({
-  name: "SearchLatency",
-  message: "/api/search",
-  value: 128,
-});`;
+import { PERFORMANCE_CODE } from "./snippets";
 
 const VITALS = [
   {
@@ -32,47 +9,41 @@ const VITALS = [
     label: "Largest Contentful Paint",
     value: "1.24s",
     width: "38%",
-    rating: "good",
   },
   {
     name: "FCP",
     label: "First Contentful Paint",
     value: "0.90s",
     width: "28%",
-    rating: "good",
   },
   {
     name: "CLS",
     label: "Cumulative Layout Shift",
     value: "0.02",
     width: "12%",
-    rating: "good",
   },
   {
     name: "INP",
     label: "Interaction to Next Paint",
     value: "86ms",
     width: "22%",
-    rating: "good",
   },
   {
     name: "TTFB",
     label: "Time to First Byte",
     value: "0.31s",
     width: "16%",
-    rating: "good",
   },
   {
     name: "FSP",
     label: "First Screen Paint",
     value: "1.10s",
     width: "34%",
-    rating: "custom",
   },
 ] as const;
 
 interface MetricSource {
-  readonly icon: LucideIcon;
+  readonly icon: string;
   readonly name: string;
   readonly source: string;
   readonly description: string;
@@ -80,35 +51,35 @@ interface MetricSource {
 
 const METRIC_SOURCES: readonly MetricSource[] = [
   {
-    icon: Activity,
+    icon: "activity",
     name: "NavigationTiming",
     source: "Navigation Timing API",
     description:
       "paint, DOM, load, DNS, TCP, TLS, TTFB, transfer and redirect breakdown.",
   },
   {
-    icon: Layers,
+    icon: "layers",
     name: "ResourceList",
     source: "performance.getEntriesByType",
     description:
       "Snapshot of every buffered resource with cache and transfer sizes.",
   },
   {
-    icon: Route,
+    icon: "route",
     name: "ResourceTiming",
     source: "PerformanceObserver",
     description:
       "Per-resource durations as they complete, with element fallback.",
   },
   {
-    icon: Zap,
+    icon: "zap",
     name: "LongTask",
     source: "PerformanceObserver",
     description:
       "Main-thread tasks that block interaction, reported as entries.",
   },
   {
-    icon: MemoryStick,
+    icon: "memory-stick",
     name: "Memory",
     source: "measureUserAgentSpecificMemory",
     description: "Chrome-only memory attribution when the API is available.",
@@ -116,8 +87,6 @@ const METRIC_SOURCES: readonly MetricSource[] = [
 ];
 
 export function Performance() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <Section
       id="performance"
@@ -127,12 +96,12 @@ export function Performance() {
       description="Web Vitals and a full navigation timing breakdown run beside your errors, so a slow request and a crash are one story."
     >
       <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-        <Reveal>
+        <ui-reveal>
           <div className="h-full rounded-3xl border border-slate-900/10 bg-white p-6 dark:border-white/10 dark:bg-white/3">
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="from-brand-500/15 to-accent-500/15 text-brand-600 ring-brand-500/20 dark:text-brand-300 grid size-9 place-items-center rounded-xl bg-linear-to-br ring-1">
-                  <Gauge className="size-4" />
+                  <Icon name="gauge" className="size-4" />
                 </span>
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
                   Web Vitals
@@ -159,15 +128,12 @@ export function Performance() {
                     </span>
                   </div>
                   <div className="h-1.5 overflow-hidden rounded-full bg-slate-900/5 dark:bg-white/5">
-                    <motion.div
-                      initial={reduceMotion ? { opacity: 0 } : { width: 0 }}
-                      whileInView={{ width: vital.width, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 0.9,
-                        delay: index * 0.07,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
+                    <enter-effect
+                      viewport
+                      initial={{ width: "0%" }}
+                      to={{ width: vital.width }}
+                      duration={0.9}
+                      delay={index * 0.07}
                       className="from-brand-500 to-accent-500 h-full rounded-full bg-linear-to-r"
                     />
                   </div>
@@ -175,44 +141,44 @@ export function Performance() {
               ))}
             </div>
           </div>
-        </Reveal>
+        </ui-reveal>
 
-        <Reveal delay={0.1} className="h-full">
-          <CodeBlock
+        <ui-reveal delay={0.1} className="h-full">
+          <code-block
             code={PERFORMANCE_CODE}
             filename="performance.ts"
             className="h-full"
           />
-        </Reveal>
+        </ui-reveal>
       </div>
 
-      <RevealList className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {METRIC_SOURCES.map((source) => {
-          const Icon = source.icon;
-          return (
-            <RevealItem key={source.name} className="h-full">
-              <article className="flex h-full flex-col rounded-2xl border border-slate-900/10 bg-white p-5 dark:border-white/10 dark:bg-white/3">
-                <div className="flex items-center gap-2.5">
-                  <span className="bg-brand-500/10 text-brand-600 dark:text-brand-300 grid size-9 place-items-center rounded-lg">
-                    <Icon className="size-4" />
-                  </span>
-                  <h3 className="font-mono text-sm font-bold text-slate-900 dark:text-white">
-                    {source.name}
-                  </h3>
-                </div>
-                <p className="text-brand-500/80 dark:text-brand-300/80 mt-3 text-[11px] font-bold tracking-wide uppercase">
-                  {source.source}
-                </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  {source.description}
-                </p>
-              </article>
-            </RevealItem>
-          );
-        })}
-        <RevealItem className="h-full">
+      <ui-reveal-list className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {METRIC_SOURCES.map((source) => (
+          <ui-reveal-item key={source.name} className="h-full">
+            <article className="flex h-full flex-col rounded-2xl border border-slate-900/10 bg-white p-5 dark:border-white/10 dark:bg-white/3">
+              <div className="flex items-center gap-2.5">
+                <span className="bg-brand-500/10 text-brand-600 dark:text-brand-300 grid size-9 place-items-center rounded-lg">
+                  <Icon name={source.icon} className="size-4" />
+                </span>
+                <h3 className="font-mono text-sm font-bold text-slate-900 dark:text-white">
+                  {source.name}
+                </h3>
+              </div>
+              <p className="text-brand-500/80 dark:text-brand-300/80 mt-3 text-[11px] font-bold tracking-wide uppercase">
+                {source.source}
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {source.description}
+              </p>
+            </article>
+          </ui-reveal-item>
+        ))}
+        <ui-reveal-item className="h-full">
           <article className="border-brand-400/40 from-brand-500/10 to-accent-500/10 flex h-full flex-col justify-center rounded-2xl border bg-linear-to-br p-5">
-            <Timer className="text-brand-600 dark:text-brand-300 size-5" />
+            <Icon
+              name="timer"
+              className="text-brand-600 dark:text-brand-300 size-5"
+            />
             <h3 className="mt-3 text-base font-bold text-slate-900 dark:text-white">
               Report your own
             </h3>
@@ -221,15 +187,15 @@ export function Performance() {
               <span className="font-mono text-[0.85em]">tracePerformance</span>.
             </p>
           </article>
-        </RevealItem>
-      </RevealList>
+        </ui-reveal-item>
+      </ui-reveal-list>
 
-      <RevealItem className="mt-8 flex flex-wrap gap-3">
-        <Pill icon={Gauge}>Web Vitals via web-vitals</Pill>
-        <Pill icon={Activity}>Field navigation timing</Pill>
-        <Pill icon={Zap}>Long task visibility</Pill>
-        <Pill icon={MemoryStick}>Memory attribution</Pill>
-      </RevealItem>
+      <ui-reveal-item className="mt-8 flex flex-wrap gap-3">
+        <Pill icon="gauge">Web Vitals via web-vitals</Pill>
+        <Pill icon="activity">Field navigation timing</Pill>
+        <Pill icon="zap">Long task visibility</Pill>
+        <Pill icon="memory-stick">Memory attribution</Pill>
+      </ui-reveal-item>
     </Section>
   );
 }

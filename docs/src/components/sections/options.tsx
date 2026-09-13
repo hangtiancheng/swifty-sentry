@@ -1,7 +1,5 @@
-import { EVENT_TYPES, OPTION_GROUPS } from "@/lib/data";
-
-import { Reveal, RevealItem, RevealList } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { EVENT_TYPES, OPTION_GROUPS } from "@/lib/data";
 
 export function Options() {
   return (
@@ -14,7 +12,7 @@ export function Options() {
     >
       <div className="space-y-8">
         {OPTION_GROUPS.map((group) => (
-          <Reveal key={group.title}>
+          <ui-reveal key={group.title}>
             <div className="overflow-hidden rounded-3xl border border-slate-900/10 bg-white dark:border-white/10 dark:bg-white/3">
               <div className="border-b border-slate-900/10 px-6 py-5 dark:border-white/10">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -58,11 +56,11 @@ export function Options() {
                 </table>
               </div>
             </div>
-          </Reveal>
+          </ui-reveal>
         ))}
       </div>
 
-      <Reveal className="mt-16">
+      <ui-reveal className="mt-16">
         <h3 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
           Event types
         </h3>
@@ -71,11 +69,11 @@ export function Options() {
           <span className="font-mono text-[0.85em]">EventType</span> so you can
           route, sample or drop signals downstream without guessing.
         </p>
-      </Reveal>
+      </ui-reveal>
 
-      <RevealList className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ui-reveal-list className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {EVENT_TYPES.map((event) => (
-          <RevealItem key={event.value}>
+          <ui-reveal-item key={event.value}>
             <div className="group hover:border-brand-400/50 dark:hover:border-brand-400/40 flex items-start gap-3 rounded-2xl border border-slate-900/10 bg-white p-4 transition dark:border-white/10 dark:bg-white/3">
               <span className="bg-brand-500/10 text-brand-600 dark:text-brand-300 mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg font-mono text-[10px] font-bold">
                 {event.label.slice(0, 2)}
@@ -92,9 +90,9 @@ export function Options() {
                 </p>
               </div>
             </div>
-          </RevealItem>
+          </ui-reveal-item>
         ))}
-      </RevealList>
+      </ui-reveal-list>
     </Section>
   );
 }

@@ -1,39 +1,7 @@
-import { Eye, MousePointerClick, Route, Timer } from "lucide-react";
-import type { ReactNode } from "react";
-
-import { CodeBlock } from "@/components/ui/code-block";
+import { Icon } from "@/components/icons/icon";
 import { MonoTag, Pill } from "@/components/ui/pill";
-import { Reveal, RevealItem, RevealList } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-
-const PV_CODE = `// Automatic — no wiring required.
-// PageLoad · HistoryChange · HashChange · PageDwell
-
-import { tracePageView } from "@swifty.js/sentry";
-
-tracePageView({
-  name: "ProductDetail",
-  message: location.href,
-  extra: { productId: "sku-001" },
-});`;
-
-const CLICK_HTML = `<a
-  swifty-sentry-ev="open-banner"
-  swifty-sentry-msg="Open campaign banner"
-  swifty-sentry-campaign="spring"
-  swifty-sentry-rank="1"
->
-  Campaign
-</a>`;
-
-const EXPOSURE_CODE = `const exposure = new ExposurePlugin();
-enablePlugin(exposure);
-
-exposure.observe({
-  target: document.querySelector("#banner"),
-  threshold: 0.5,
-  params: { bannerId: "spring-001" },
-});`;
+import { CLICK_HTML, EXPOSURE_CODE, PV_CODE } from "./snippets";
 
 const DWELL_ROWS = [
   {
@@ -57,21 +25,21 @@ const DWELL_ROWS = [
 ] as const;
 
 function AnalyticsCard({
-  icon: Icon,
+  icon,
   label,
   title,
   children,
 }: {
-  readonly icon: typeof Timer;
+  readonly icon: string;
   readonly label: string;
   readonly title: string;
-  readonly children: ReactNode;
+  readonly children: unknown;
 }) {
   return (
-    <RevealItem className="h-full">
+    <ui-reveal-item className="h-full">
       <article className="flex h-full flex-col rounded-3xl border border-slate-900/10 bg-white p-6 dark:border-white/10 dark:bg-white/3">
         <span className="from-brand-500/15 to-accent-500/15 text-brand-600 ring-brand-500/20 dark:text-brand-300 grid size-11 place-items-center rounded-xl bg-linear-to-br ring-1">
-          <Icon className="size-5" />
+          <Icon name={icon} className="size-5" />
         </span>
         <p className="text-brand-500/80 dark:text-brand-300/80 mt-4 text-[11px] font-bold tracking-[0.16em] uppercase">
           {label}
@@ -81,7 +49,7 @@ function AnalyticsCard({
         </h3>
         <div className="mt-4 flex-1">{children}</div>
       </article>
-    </RevealItem>
+    </ui-reveal-item>
   );
 }
 
@@ -119,7 +87,10 @@ function ExposureVisual() {
         <div className="via-accent-400/70 absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent" />
         <div className="flex items-center justify-between">
           <span className="dark:bg-ink-800 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-800 shadow-sm dark:text-white">
-            <Eye className="text-brand-500 dark:text-brand-300 size-3.5" />
+            <Icon
+              name="eye"
+              className="text-brand-500 dark:text-brand-300 size-3.5"
+            />
             #banner
           </span>
           <span className="bg-accent-500/15 text-accent-600 dark:text-accent-300 rounded-full px-2.5 py-1 font-mono text-[11px] font-bold">
@@ -148,18 +119,18 @@ export function Analytics() {
       description="Behavioural signals live next to your error data. See which page a session lingered on, what people clicked and how long a promotion stayed on screen."
     >
       <div className="grid items-center gap-10 lg:grid-cols-2">
-        <Reveal>
+        <ui-reveal>
           <div className="rounded-3xl border border-slate-900/10 bg-white p-6 dark:border-white/10 dark:bg-white/3">
             <DwellVisual />
           </div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <CodeBlock code={PV_CODE} filename="analytics.ts" />
-        </Reveal>
+        </ui-reveal>
+        <ui-reveal delay={0.1}>
+          <code-block code={PV_CODE} filename="analytics.ts" />
+        </ui-reveal>
       </div>
 
       <div className="mt-14 grid items-center gap-10 lg:grid-cols-2">
-        <Reveal className="lg:order-2">
+        <ui-reveal className="lg:order-2">
           <div className="rounded-3xl border border-slate-900/10 bg-white p-6 dark:border-white/10 dark:bg-white/3">
             <p className="mb-4 text-sm font-bold text-slate-900 dark:text-white">
               Declarative click attributes
@@ -185,15 +156,15 @@ export function Analytics() {
               ))}
             </dl>
           </div>
-        </Reveal>
-        <Reveal delay={0.1} className="lg:order-1">
-          <CodeBlock code={CLICK_HTML} filename="hero.html" />
-        </Reveal>
+        </ui-reveal>
+        <ui-reveal delay={0.1} className="lg:order-1">
+          <code-block code={CLICK_HTML} filename="hero.html" />
+        </ui-reveal>
       </div>
 
-      <RevealList className="mt-14 grid gap-5 lg:grid-cols-3">
+      <ui-reveal-list className="mt-14 grid gap-5 lg:grid-cols-3">
         <AnalyticsCard
-          icon={Route}
+          icon="route"
           label="Signals"
           title="Automatic page views"
         >
@@ -205,7 +176,7 @@ export function Analytics() {
         </AnalyticsCard>
 
         <AnalyticsCard
-          icon={MousePointerClick}
+          icon="mouse-pointer-click"
           label="Interaction"
           title="Zero-code click tracking"
         >
@@ -215,22 +186,22 @@ export function Analytics() {
           </p>
         </AnalyticsCard>
 
-        <AnalyticsCard icon={Eye} label="Visibility" title="Exposure durations">
+        <AnalyticsCard icon="eye" label="Visibility" title="Exposure durations">
           <ExposureVisual />
         </AnalyticsCard>
-      </RevealList>
+      </ui-reveal-list>
 
-      <Reveal delay={0.1} className="mt-10">
+      <ui-reveal delay={0.1} className="mt-10">
         <div className="overflow-hidden rounded-3xl border border-slate-900/10 dark:border-white/10">
-          <CodeBlock code={EXPOSURE_CODE} filename="exposure.ts" />
+          <code-block code={EXPOSURE_CODE} filename="exposure.ts" />
         </div>
-      </Reveal>
+      </ui-reveal>
 
-      <RevealItem className="mt-8 flex flex-wrap gap-3">
-        <Pill icon={Timer}>Dwell-time reporting</Pill>
-        <Pill icon={MousePointerClick}>Throttled clicks</Pill>
-        <Pill icon={Eye}>Threshold-aware observers</Pill>
-      </RevealItem>
+      <ui-reveal-item className="mt-8 flex flex-wrap gap-3">
+        <Pill icon="timer">Dwell-time reporting</Pill>
+        <Pill icon="mouse-pointer-click">Throttled clicks</Pill>
+        <Pill icon="eye">Threshold-aware observers</Pill>
+      </ui-reveal-item>
     </Section>
   );
 }

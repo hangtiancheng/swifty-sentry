@@ -1,9 +1,7 @@
-import { ArrowUpRight } from "lucide-react";
-
-import { handleAnchorClick } from "@/lib/scroll";
-
 import { GithubIcon } from "./icons/github-icon";
+import { Icon } from "./icons/icon";
 import { Logo } from "./logo";
+import { handleAnchorClick } from "@/lib/scroll";
 
 const REPO = "https://github.com/hangtiancheng/swifty-sentry";
 
@@ -103,7 +101,10 @@ export function Footer() {
                     className="group hover:text-brand-600 dark:hover:text-brand-200 inline-flex items-center gap-1 text-sm text-slate-600 transition dark:text-slate-400"
                   >
                     {link.label}
-                    <ArrowUpRight className="size-3.5 opacity-0 transition group-hover:opacity-100" />
+                    <Icon
+                      name="arrow-up-right"
+                      className="size-3.5 opacity-0 transition group-hover:opacity-100"
+                    />
                   </a>
                 </li>
               ))}

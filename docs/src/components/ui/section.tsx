@@ -1,14 +1,10 @@
-import type { ReactNode } from "react";
-
-import { Reveal } from "./reveal";
-
-interface SectionProps {
+export interface SectionProps {
   readonly id?: string;
   readonly eyebrow?: string;
-  readonly title: ReactNode;
-  readonly accent?: ReactNode;
-  readonly description?: ReactNode;
-  readonly children: ReactNode;
+  readonly title: unknown;
+  readonly accent?: unknown;
+  readonly description?: unknown;
+  readonly children?: unknown;
   readonly className?: string;
   readonly contentClassName?: string;
 }
@@ -29,7 +25,7 @@ export function Section({
       className={`scroll-mt-28 py-20 sm:py-28 ${className ?? ""}`}
     >
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
-        <Reveal className="max-w-3xl">
+        <ui-reveal className="max-w-3xl">
           {eyebrow ? (
             <p className="text-brand-600 dark:text-brand-300 mb-3 flex items-center gap-2 text-xs font-bold tracking-[0.22em] uppercase">
               <span className="from-brand-500 to-accent-500 h-px w-8 bg-linear-to-r" />
@@ -52,7 +48,7 @@ export function Section({
               {description}
             </p>
           ) : null}
-        </Reveal>
+        </ui-reveal>
         <div className={`mt-12 sm:mt-14 ${contentClassName ?? ""}`}>
           {children}
         </div>

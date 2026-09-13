@@ -1,18 +1,29 @@
-import { AnimatePresence, motion } from "motion/react";
-import { Boxes, Component, Layers, TriangleAlert } from "lucide-react";
-import { useState } from "react";
+import {
+  createRef,
+  LitElement,
+  customElement,
+  state,
+} from "@swifty.js/lit-jsx";
+import { animate } from "motion";
 
-import { CodeBlock } from "@/components/ui/code-block";
+import { Icon } from "@/components/icons/icon";
 import { MonoTag } from "@/components/ui/pill";
-import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { EASE } from "@/lib/motion";
+import { TAB_REACT_CODE, TAB_VANILLA_CODE, TAB_VUE_CODE } from "./snippets";
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "frameworks-section": FrameworksSectionElement;
+  }
+}
 
 type FrameworkKey = "vanilla" | "react" | "vue";
 
 interface FrameworkTab {
   readonly key: FrameworkKey;
   readonly label: string;
-  readonly icon: typeof Boxes;
+  readonly icon: string;
   readonly filename: string;
   readonly code: string;
   readonly note: string;
@@ -22,54 +33,25 @@ const TABS: readonly FrameworkTab[] = [
   {
     key: "vanilla",
     label: "Vanilla",
-    icon: Boxes,
+    icon: "boxes",
     filename: "main.ts",
-    code: `import { init, enablePlugin } from "@swifty.js/sentry";
-import { PerformancePlugin } from "@swifty.js/sentry/plugins";
-
-init({ dsn: "/api/log", projectId: "vanilla-app" });
-
-enablePlugin(new PerformancePlugin());`,
+    code: TAB_VANILLA_CODE,
     note: "The core entry is framework agnostic and safe to import anywhere. No framework dependency is ever pulled into your bundle.",
   },
   {
     key: "react",
     label: "React",
-    icon: Component,
+    icon: "component",
     filename: "app.tsx",
-    code: `import { init } from "@swifty.js/sentry";
-import { ReactErrorBoundary } from "@swifty.js/sentry/react";
-
-init({ dsn: "/api/log", projectId: "react-app" });
-
-export function App() {
-  return (
-    <ReactErrorBoundary
-      fallback={(error) => <div>{error.message}</div>}
-    >
-      <Page />
-    </ReactErrorBoundary>
-  );
-}`,
+    code: TAB_REACT_CODE,
     note: "The boundary reports caught render errors as React events with the component stack. Async callbacks, event handlers and SSR errors still need traceError().",
   },
   {
     key: "vue",
     label: "Vue 3",
-    icon: Layers,
+    icon: "layers",
     filename: "main.ts",
-    code: `import { createApp } from "vue";
-import { vuePlugin } from "@swifty.js/sentry/vue";
-import App from "./app.vue";
-
-const app = createApp(App);
-
-app.use(vuePlugin, {
-  dsn: "/api/log",
-  projectId: "vue-app",
-});
-
-app.mount("#app");`,
+    code: TAB_VUE_CODE,
     note: "vuePlugin wraps app.config.errorHandler, reports Vue errors with the instance and info string, then calls any handler you had installed before.",
   },
 ];
@@ -89,115 +71,159 @@ const HIGHLIGHTS = [
   },
 ] as const;
 
-export function Frameworks() {
-  const [active, setActive] = useState<FrameworkKey>("react");
-  const current = TABS.find((tab) => tab.key === active) ?? TABS[0]!;
+@customElement("frameworks-section")
+export class FrameworksSectionElement extends LitElement {
+  @state() private active: FrameworkKey = "react";
 
-  return (
-    <Section
-      id="frameworks"
-      eyebrow="Frameworks"
-      title="First-class where it counts."
-      accent=""
-      description="React and Vue ship as dedicated subpath exports. Everyone else uses the same typed core with reportFrameworkError."
-    >
-      <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-        <Reveal>
-          <div className="flex flex-col gap-2">
-            <div className="inline-flex rounded-2xl border border-slate-900/10 bg-white p-1.5 dark:border-white/10 dark:bg-white/3">
-              {TABS.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = tab.key === active;
-                return (
-                  <button
-                    key={tab.key}
-                    type="button"
-                    onClick={() => setActive(tab.key)}
-                    className="relative flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition"
-                  >
-                    {isActive ? (
-                      <motion.span
-                        layoutId="framework-tab"
-                        className="from-brand-500 to-accent-500 shadow-brand-500/25 absolute inset-0 rounded-xl bg-linear-to-r shadow-lg"
-                        transition={{
-                          type: "spring",
-                          stiffness: 320,
-                          damping: 30,
-                        }}
-                      />
-                    ) : null}
-                    <span
-                      className={`relative z-10 flex items-center gap-2 ${
-                        isActive
-                          ? "text-white"
-                          : "text-slate-600 dark:text-slate-300"
-                      }`}
+  private indicatorRef = createRef<HTMLSpanElement>();
+  private noteRef = createRef<HTMLParagraphElement>();
+  private codeWrapRef = createRef<HTMLDivElement>();
+
+  protected override createRenderRoot(): HTMLElement {
+    return this;
+  }
+
+  protected override firstUpdated(): void {
+    this.moveIndicator(false);
+  }
+
+  private select(key: FrameworkKey): void {
+    if (key === this.active) {
+      return;
+    }
+    this.active = key;
+    this.moveIndicator(true);
+    void this.updateComplete.then(() => {
+      if (this.noteRef.value) {
+        animate(
+          this.noteRef.value,
+          { opacity: [0, 1], y: [8, 0] },
+          { duration: 0.25 },
+        );
+      }
+      if (this.codeWrapRef.value) {
+        animate(
+          this.codeWrapRef.value,
+          { opacity: [0, 1], y: [12, 0] },
+          { duration: 0.3, ease: EASE },
+        );
+      }
+    });
+  }
+
+  private moveIndicator(withSpring: boolean): void {
+    void this.updateComplete.then(() => {
+      const indicator = this.indicatorRef.value;
+      const button = this.querySelector<HTMLElement>(
+        `[data-key="${this.active}"]`,
+      );
+      if (!indicator || !button) {
+        return;
+      }
+      if (withSpring) {
+        animate(
+          indicator,
+          { x: button.offsetLeft, width: button.offsetWidth },
+          { type: "spring", stiffness: 320, damping: 30 },
+        );
+      } else {
+        indicator.style.transform = `translateX(${button.offsetLeft}px)`;
+        indicator.style.width = `${button.offsetWidth}px`;
+      }
+    });
+  }
+
+  protected override render() {
+    const current = TABS.find((tab) => tab.key === this.active) ?? TABS[0]!;
+
+    return (
+      <Section
+        id="frameworks"
+        eyebrow="Frameworks"
+        title="First-class where it counts."
+        accent=""
+        description="React and Vue ship as dedicated subpath exports. Everyone else uses the same typed core with reportFrameworkError."
+      >
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+          <ui-reveal>
+            <div className="flex flex-col gap-2">
+              <div className="relative inline-flex rounded-2xl border border-slate-900/10 bg-white p-1.5 dark:border-white/10 dark:bg-white/3">
+                {TABS.map((tab) => {
+                  const isActive = tab.key === this.active;
+                  return (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      data-key={tab.key}
+                      onClick={() => this.select(tab.key)}
+                      className="relative z-10 flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition"
                     >
-                      <Icon className="size-4" />
-                      {tab.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+                      <span
+                        className={`flex items-center gap-2 ${
+                          isActive
+                            ? "text-white"
+                            : "text-slate-600 dark:text-slate-300"
+                        }`}
+                      >
+                        <Icon name={tab.icon} className="size-4" />
+                        {tab.label}
+                      </span>
+                    </button>
+                  );
+                })}
+                <span
+                  ref={this.indicatorRef}
+                  className="from-brand-500 to-accent-500 shadow-brand-500/25 pointer-events-none absolute inset-y-1.5 left-0 w-0 rounded-xl bg-linear-to-r shadow-lg"
+                />
+              </div>
 
-            <div className="rounded-2xl border border-slate-900/10 bg-white p-5 dark:border-white/10 dark:bg-white/3">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={active}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25 }}
+              <div className="rounded-2xl border border-slate-900/10 bg-white p-5 dark:border-white/10 dark:bg-white/3">
+                <p
+                  ref={this.noteRef}
                   className="text-sm leading-relaxed text-slate-600 dark:text-slate-400"
                 >
                   {current.note}
-                </motion.p>
-              </AnimatePresence>
-            </div>
+                </p>
+              </div>
 
-            <div className="mt-2 space-y-3">
-              {HIGHLIGHTS.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-slate-900/10 bg-white p-4 dark:border-white/10 dark:bg-white/3"
-                >
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">
-                    {item.title}
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                    {item.body}
-                  </p>
-                </div>
-              ))}
+              <div className="mt-2 space-y-3">
+                {HIGHLIGHTS.map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl border border-slate-900/10 bg-white p-4 dark:border-white/10 dark:bg-white/3"
+                  >
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      {item.title}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                      {item.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </Reveal>
+          </ui-reveal>
 
-        <Reveal delay={0.1}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <CodeBlock
+          <ui-reveal delay={0.1}>
+            <div ref={this.codeWrapRef}>
+              <code-block
                 code={current.code}
                 filename={current.filename}
                 showLineNumbers
               />
-            </motion.div>
-          </AnimatePresence>
-          <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-            <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-amber-500" />
-            Boundaries only catch synchronous render errors. Use{" "}
-            <MonoTag>traceError()</MonoTag> for async and event-handler
-            failures.
-          </p>
-        </Reveal>
-      </div>
-    </Section>
-  );
+            </div>
+            <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+              <Icon
+                name="triangle-alert"
+                className="mt-0.5 size-3.5 shrink-0 text-amber-500"
+              />
+              Boundaries only catch synchronous render errors. Use{" "}
+              <MonoTag>traceError()</MonoTag> for async and event-handler
+              failures.
+            </p>
+          </ui-reveal>
+        </div>
+      </Section>
+    );
+  }
 }

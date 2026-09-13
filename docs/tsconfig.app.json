@@ -15,6 +15,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@swifty.js/lit-jsx",
 
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
@@ -29,5 +30,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/components/sections/snippets/**"]
 }

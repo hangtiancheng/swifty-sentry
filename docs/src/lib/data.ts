@@ -1,32 +1,5 @@
-import {
-  Activity,
-  Boxes,
-  Braces,
-  Bug,
-  Camera,
-  Database,
-  Eye,
-  FileCode,
-  Fingerprint,
-  Gauge,
-  Globe,
-  Layers,
-  MousePointerClick,
-  Network,
-  Plug,
-  Radio,
-  Route,
-  ScanEye,
-  ShieldCheck,
-  Sparkles,
-  Timer,
-  Waypoints,
-  Wifi,
-  type LucideIcon,
-} from "lucide-react";
-
 export interface Feature {
-  readonly icon: LucideIcon;
+  readonly icon: string;
   readonly title: string;
   readonly description: string;
   readonly tag: string;
@@ -34,112 +7,112 @@ export interface Feature {
 
 export const FEATURES: readonly Feature[] = [
   {
-    icon: Bug,
+    icon: "bug",
     title: "Error capture",
     description:
       "Runtime errors, console.error, resource load failures and unhandled rejections are classified, deduplicated and batched automatically.",
     tag: "Errors",
   },
   {
-    icon: Globe,
+    icon: "globe",
     title: "HTTP capture",
     description:
       "XHR and fetch are instrumented with status classification, server-timing parsing and 8 KB body capture on failures only.",
     tag: "Network",
   },
   {
-    icon: Gauge,
+    icon: "gauge",
     title: "Web Vitals",
     description:
       "LCP, FCP, CLS, INP and TTFB alongside a custom First Screen Paint metric measured from real DOM mutations.",
     tag: "Performance",
   },
   {
-    icon: Activity,
+    icon: "activity",
     title: "Navigation timing",
     description:
       "DNS, TLS, TTFB, DOM processing, resource load and redirect breakdowns from the Navigation Timing API.",
     tag: "Performance",
   },
   {
-    icon: Timer,
+    icon: "timer",
     title: "Page views & dwell",
     description:
       "Automatic PageLoad, route-change PVs and dwell time flushed on pagehide so mobile sessions are never lost.",
     tag: "Analytics",
   },
   {
-    icon: MousePointerClick,
+    icon: "mouse-pointer-click",
     title: "Declarative clicks",
     description:
       "Zero-code click tracking through swifty-sentry-* attributes with params, element path and viewport coordinates.",
     tag: "Analytics",
   },
   {
-    icon: Eye,
+    icon: "eye",
     title: "Exposure tracking",
     description:
       "Measure how long any element stays visible with IntersectionObserver thresholds and custom params per target.",
     tag: "Analytics",
   },
   {
-    icon: ScanEye,
+    icon: "scan-eye",
     title: "White-screen detection",
     description:
       "18-point viewport sampling plus a skeleton-screen baseline mode catches blank pages before users report them.",
     tag: "Quality",
   },
   {
-    icon: Camera,
+    icon: "camera",
     title: "Screen recording",
     description:
       "A gzipped rrweb rolling window is attached to the errors and requests you care about, decodable with one helper.",
     tag: "Diagnostics",
   },
   {
-    icon: Wifi,
+    icon: "wifi",
     title: "Offline reporting",
     description:
       "Events queue in localStorage, ship with sendBeacon and recover with an exponential backoff health probe.",
     tag: "Reliability",
   },
   {
-    icon: Route,
+    icon: "route",
     title: "Breadcrumbs",
     description:
       "A bounded trail of HTTP, click, route, resource and code events attached to every error-class report.",
     tag: "Diagnostics",
   },
   {
-    icon: Fingerprint,
+    icon: "fingerprint",
     title: "Visitor identity",
     description:
       "Anonymous visitor ids, persistent device ids and per-tab session ids resolve users across refreshes.",
     tag: "Identity",
   },
   {
-    icon: Plug,
+    icon: "plug",
     title: "Reporter hooks",
     description:
       "beforeSend, beforeSendBatch and afterSend let you redact, filter or enrich every event before it leaves the browser.",
     tag: "Control",
   },
   {
-    icon: Boxes,
+    icon: "boxes",
     title: "Plugin system",
     description:
       "Extend the core with any SentryPlugin implementation — everything is tree-shakeable and framework free.",
     tag: "Extensible",
   },
   {
-    icon: Layers,
+    icon: "layers",
     title: "React & Vue",
     description:
       "A React ErrorBoundary and a Vue 3 plugin are published as dedicated subpath exports so nothing extra is bundled.",
     tag: "Frameworks",
   },
   {
-    icon: FileCode,
+    icon: "file-code",
     title: "Dev-time source maps",
     description:
       "Vite and webpack dev-server plugins resolve reported stacks back to original source with inline snippets.",
@@ -391,7 +364,7 @@ export interface ApiItem {
   readonly name: string;
   readonly signature: string;
   readonly description: string;
-  readonly icon: LucideIcon;
+  readonly icon: string;
 }
 
 export const API_ITEMS: readonly ApiItem[] = [
@@ -400,90 +373,90 @@ export const API_ITEMS: readonly ApiItem[] = [
     signature: "init(options: InitOptions): void",
     description:
       "Validates options with zod, writes runtime config and installs every enabled capture layer.",
-    icon: Sparkles,
+    icon: "sparkles",
   },
   {
     name: "destroy",
     signature: "destroy(): void",
     description:
       "Restores decorated globals, tears down plugins and resets all session state.",
-    icon: ShieldCheck,
+    icon: "shield-check",
   },
   {
     name: "isInitialized",
     signature: "isInitialized(): boolean",
     description:
       "Returns true once setup has completed and false after destroy.",
-    icon: Radio,
+    icon: "radio",
   },
   {
     name: "enablePlugin",
     signature: "enablePlugin(...plugins: SentryPlugin[]): void",
     description: "Initializes and registers any number of plugin instances.",
-    icon: Plug,
+    icon: "plug",
   },
   {
     name: "traceError",
     signature: "traceError(error: unknown): void",
     description:
       "Routes an error through the full classification pipeline manually.",
-    icon: Bug,
+    icon: "bug",
   },
   {
     name: "tracePerformance",
     signature: "tracePerformance({ name, message, value }): void",
     description: "Report a custom performance metric as an OK event.",
-    icon: Gauge,
+    icon: "gauge",
   },
   {
     name: "traceCustomEvent",
     signature: "traceCustomEvent({ name, message, extra? }): void",
     description: "Emit an arbitrary business event with optional context.",
-    icon: Waypoints,
+    icon: "waypoints",
   },
   {
     name: "tracePageView",
     signature: "tracePageView({ name?, message?, extra? }): void",
     description: "Manually record a page view, useful for virtual routes.",
-    icon: Timer,
+    icon: "timer",
   },
   {
     name: "reportFrameworkError",
     signature: "reportFrameworkError({ type, error, context }): void",
     description:
       "Report React, Vue or any other framework error with explicit context.",
-    icon: Layers,
+    icon: "layers",
   },
   {
     name: "setUserId",
     signature: "setUserId(userId: string): void",
     description: "Attach the current user id to subsequent reports.",
-    icon: Fingerprint,
+    icon: "fingerprint",
   },
   {
     name: "setVisitorId",
     signature: "setVisitorId(visitorId: string): void",
     description: "Bind a backend-known visitor id to the session.",
-    icon: Database,
+    icon: "database",
   },
   {
     name: "flushOfflineCache",
     signature: "flushOfflineCache(): Promise<void>",
     description: "Load the persisted queue and attempt to send it now.",
-    icon: Wifi,
+    icon: "wifi",
   },
   {
     name: "beforeSend / afterSend",
     signature: "beforeSend(hook) · beforeSendBatch(hook) · afterSend(hook)",
     description: "Register reporter hooks programmatically after init.",
-    icon: Braces,
+    icon: "braces",
   },
   {
     name: "getIdentity",
     signature: "getIdentity(): Identity",
     description:
       "Read anonymousId, visitorId, userId and their presence flags.",
-    icon: Network,
+    icon: "network",
   },
 ];
 

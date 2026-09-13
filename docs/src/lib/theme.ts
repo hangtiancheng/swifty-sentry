@@ -1,28 +1,46 @@
-import { createContext, useContext } from "react";
-
 export type Theme = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "swifty-theme";
 
-export interface ThemeContextValue {
-  readonly theme: Theme;
-  readonly toggle: () => void;
-  readonly setTheme: (theme: Theme) => void;
-}
-
-export const ThemeContext = createContext<ThemeContextValue | null>(null);
-
 export function getInitialTheme(): Theme {
-  if (typeof document === "undefined") {
-    return "light";
-  }
   return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
-export function useTheme(): ThemeContextValue {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used inside <ThemeProvider>");
+type ThemeListener = (theme: Theme) => void;
+
+class ThemeStore {
+  private current: Theme = getInitialTheme();
+  private listeners = new Set<ThemeListener>();
+
+  get theme(): Theme {
+    return this.current;
   }
-  return context;
+
+  set(theme: Theme): void {
+    this.current = theme;
+    const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
+    root.style.colorScheme = theme;
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      /* storage may be unavailable */
+    }
+    for (const listener of this.listeners) {
+      listener(theme);
+    }
+  }
+
+  toggle(): void {
+    this.set(this.current === "dark" ? "light" : "dark");
+  }
+
+  subscribe(listener: ThemeListener): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
 }
+
+export const themeStore = new ThemeStore();

@@ -1,11 +1,6 @@
-import { createRoot } from "react-dom/client";
+import { createRoot } from "@swifty.js/lit-jsx";
 
-import App from "./app.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { App } from "./app";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
-  <ThemeProvider>
-    <App />
-  </ThemeProvider>,
-);
+createRoot(document.getElementById("root")!).render(<App />);
