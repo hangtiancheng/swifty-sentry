@@ -22,6 +22,7 @@ packages:
   - sentry
   - client
   - server
+  - docs
 
 allowBuilds:
   "@parcel/watcher": true

@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* Class-based dark mode so the toggle (not just the OS) is authoritative. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    "Cascadia Code", monospace;
+
+  /* Lavender purple brand scale. */
+  --color-brand-50: #f6f3ff;
+  --color-brand-100: #ede6ff;
+  --color-brand-200: #ddd0ff;
+  --color-brand-300: #c3aaff;
+  --color-brand-400: #a57dff;
+  --color-brand-500: #8952f6;
+  --color-brand-600: #7333e4;
+  --color-brand-700: #6126c4;
+  --color-brand-800: #50219f;
+  --color-brand-900: #421d80;
+  --color-brand-950: #291058;
+
+  /* Warm magenta accent that pairs with lavender. */
+  --color-accent-200: #fbd0ff;
+  --color-accent-300: #f4adff;
+  --color-accent-400: #ec86fb;
+  --color-accent-500: #dd5cf0;
+  --color-accent-600: #c93ad8;
+
+  /* Near-black surfaces used by the hero and code panels. */
+  --color-ink-950: #0a0611;
+  --color-ink-900: #110a1e;
+  --color-ink-800: #191031;
+  --color-ink-700: #241645;
+}
