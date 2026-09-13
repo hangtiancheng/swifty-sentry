@@ -26,7 +26,19 @@ import { getFirstScreenPaint } from "@/plugins/performance/first-screen-paint.js
 import { FakeIntersectionObserver } from "./fake-intersection-observer.js";
 
 function createMutation(target: Node, addedNodes: readonly Node[]): MutationRecord {
-  return { target, addedNodes } as unknown as MutationRecord;
+  const holder = document.createElement("div");
+  holder.append(...addedNodes);
+  return {
+    type: "childList",
+    target,
+    addedNodes: holder.childNodes,
+    removedNodes: document.createElement("div").childNodes,
+    previousSibling: null,
+    nextSibling: null,
+    attributeName: null,
+    attributeNamespace: null,
+    oldValue: null,
+  };
 }
 
 class FakeMutationObserver implements MutationObserver {
