@@ -1,6 +1,7 @@
 {
   "name": "swifty-sentry",
   "version": "0.0.0",
+  "packageManager": "pnpm@12.3.4",
   "type": "module",
   "workspaces": [
     "client",
