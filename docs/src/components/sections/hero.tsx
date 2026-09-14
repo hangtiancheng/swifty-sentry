@@ -105,22 +105,24 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-36">
       <HeroBackdrop />
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_0.98fr]">
-          <div>
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.02fr_0.98fr]">
+          <div className="min-w-0">
             <ui-reveal>
               <a
                 href="#features"
                 onClick={(event) => handleAnchorClick(event, "#features")}
-                className="group border-brand-300/60 text-brand-700 hover:border-brand-400 dark:border-brand-400/25 dark:bg-brand-500/10 dark:text-brand-200 inline-flex max-w-full items-center gap-2 rounded-full border bg-white/70 py-1.5 pr-4 pl-1.5 text-xs font-semibold shadow-sm backdrop-blur transition"
+                className="group border-brand-300/60 text-brand-700 hover:border-brand-400 dark:border-brand-400/25 dark:bg-brand-500/10 dark:text-brand-200 inline-flex max-w-full items-center gap-2 rounded-2xl border bg-white/70 py-2 pr-4 pl-1.5 text-xs font-semibold shadow-sm backdrop-blur transition"
               >
-                <span className="from-brand-500 to-accent-500 inline-flex items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1 text-[11px] font-bold text-white">
+                <span className="from-brand-500 to-accent-500 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-linear-to-r px-2.5 py-1 text-[11px] font-bold text-white">
                   <Icon name="sparkles" className="size-3" />
                   v0.0.7
                 </span>
-                Plugins, offline reporting & dev-time source maps
+                <span className="min-w-0">
+                  Plugins, offline reporting & dev-time source maps
+                </span>
                 <Icon
                   name="arrow-right"
-                  className="size-3.5 transition-transform group-hover:translate-x-0.5"
+                  className="size-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
                 />
               </a>
             </ui-reveal>

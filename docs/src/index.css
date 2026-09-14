@@ -18,6 +18,19 @@
   ui-reveal-item,
   ui-reveal-list {
     display: block;
+    /* As grid/flex items these default to min-width:auto, which lets their
+       max-content blow out the track and clip on narrow viewports (e.g. the
+       hero badge and the frameworks tab bar). Allow them to shrink to the
+       column width instead. */
+    min-width: 0;
+  }
+
+  /* Keyboard focus ring. focus-visible only fires for keyboard navigation, so
+     mouse/touch users never see it. outline (not box-shadow) avoids colliding
+     with the component shadows already on these elements. */
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
   }
 }
 

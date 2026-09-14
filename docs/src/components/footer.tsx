@@ -77,7 +77,7 @@ export function Footer() {
                     <a
                       href={link.href}
                       onClick={(event) => handleAnchorClick(event, link.href)}
-                      className="hover:text-brand-600 dark:hover:text-brand-200 inline-block py-1 text-sm text-slate-600 transition dark:text-slate-400"
+                      className="hover:text-brand-600 dark:hover:text-brand-200 inline-block py-1.5 text-sm text-slate-600 transition dark:text-slate-400"
                     >
                       {link.label}
                     </a>
@@ -98,7 +98,7 @@ export function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group hover:text-brand-600 dark:hover:text-brand-200 inline-flex items-center gap-1 py-1 text-sm text-slate-600 transition dark:text-slate-400"
+                    className="group hover:text-brand-600 dark:hover:text-brand-200 inline-flex items-center gap-1 py-1.5 text-sm text-slate-600 transition dark:text-slate-400"
                   >
                     {link.label}
                     <Icon

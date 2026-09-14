@@ -52,10 +52,10 @@ export function Integrations() {
           <ui-reveal-item key={tool.name} className="h-full">
             <div className="flex h-full flex-col rounded-3xl border border-slate-900/10 bg-white p-6 dark:border-white/10 dark:bg-white/3">
               <div className="mb-5 flex items-center gap-3">
-                <span className="from-brand-500/15 to-accent-500/15 text-brand-600 ring-brand-500/20 dark:text-brand-300 grid size-11 place-items-center rounded-xl bg-linear-to-br ring-1">
+                <span className="from-brand-500/15 to-accent-500/15 text-brand-600 ring-brand-500/20 dark:text-brand-300 grid size-11 shrink-0 place-items-center rounded-xl bg-linear-to-br ring-1">
                   <Icon name={tool.icon} className="size-5" />
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <h3 className="min-w-0 text-lg font-bold text-slate-900 dark:text-white">
                   {tool.name}
                 </h3>
               </div>

@@ -97,7 +97,10 @@ function ClassificationMock() {
           className="bg-brand-100/50 flex items-center justify-between rounded-lg px-3 py-2 dark:bg-white/5"
         >
           <span className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
-            <Icon name={item.icon} className={`size-3.5 ${item.tone}`} />
+            <Icon
+              name={item.icon}
+              className={`size-3.5 shrink-0 ${item.tone}`}
+            />
             {item.label}
           </span>
           <span className="bg-brand-200/50 rounded-md px-2 py-0.5 text-[10px] font-bold text-slate-600 dark:bg-white/10 dark:text-slate-300">
@@ -123,7 +126,7 @@ function TimelineMock() {
       <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
         <Icon
           name="camera"
-          className="size-3.5 text-lime-600 dark:text-lime-300"
+          className="size-3.5 shrink-0 text-lime-600 dark:text-lime-300"
         />
         Rolling rrweb window · gzip + base64
       </div>
@@ -144,21 +147,21 @@ function TimelineMock() {
         <li className="flex items-center gap-2">
           <Icon
             name="route"
-            className="text-brand-500 dark:text-brand-300 size-3"
+            className="text-brand-500 dark:text-brand-300 size-3 shrink-0"
           />{" "}
           HistoryChange → /checkout
         </li>
         <li className="flex items-center gap-2">
           <Icon
             name="braces"
-            className="size-3 text-sky-500 dark:text-sky-300"
+            className="size-3 shrink-0 text-sky-500 dark:text-sky-300"
           />{" "}
           POST /api/order · 500
         </li>
         <li className="flex items-center gap-2">
           <Icon
             name="bug"
-            className="text-accent-500 dark:text-accent-300 size-3"
+            className="text-accent-500 dark:text-accent-300 size-3 shrink-0"
           />{" "}
           TypeError: total is undefined
         </li>

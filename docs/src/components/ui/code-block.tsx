@@ -133,9 +133,9 @@ export class CodeBlockElement extends LitElement {
       <div className="bg-brand-50/80 border-brand-200/70 shadow-brand-950/5 ring-brand-900/5 dark:bg-ink-950 dark:shadow-brand-950/40 h-full overflow-hidden rounded-2xl border shadow-2xl ring-1 dark:border-white/10 dark:ring-black/5">
         {this.chrome ? (
           <div className="bg-brand-100/60 border-brand-200/70 flex items-center gap-2 border-b px-4 py-3 dark:border-white/10 dark:bg-white/3">
-            <span className="size-3 rounded-full bg-[#ff5f57]" />
-            <span className="size-3 rounded-full bg-[#febc2e]" />
-            <span className="size-3 rounded-full bg-[#28c840]" />
+            <span className="size-3 shrink-0 rounded-full bg-[#ff5f57]" />
+            <span className="size-3 shrink-0 rounded-full bg-[#febc2e]" />
+            <span className="size-3 shrink-0 rounded-full bg-[#28c840]" />
             {this.filename ? (
               <span className="ml-2 truncate font-mono text-xs text-slate-500 dark:text-slate-400">
                 {this.filename}
@@ -145,7 +145,7 @@ export class CodeBlockElement extends LitElement {
               type="button"
               onClick={() => this.handleCopy()}
               aria-label="Copy code"
-              className="border-brand-300/60 hover:border-brand-400/60 hover:text-brand-700 ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg border bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-600 transition dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:text-white"
+              className="border-brand-300/60 hover:border-brand-400/60 hover:text-brand-700 ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg border bg-white/80 px-3 py-2 text-xs font-medium text-slate-600 transition dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:text-white"
             >
               <Icon
                 name={this.copied ? "check" : "copy"}

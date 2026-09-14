@@ -59,14 +59,14 @@ export function QuickStart() {
           <ui-reveal-item key={step.title} className="h-full">
             <div className="flex h-full flex-col rounded-3xl border border-slate-900/10 bg-white p-6 dark:border-white/10 dark:bg-white/3">
               <div className="mb-5 flex items-center gap-3">
-                <span className="from-brand-500 to-accent-500 shadow-brand-500/25 relative grid size-11 place-items-center rounded-2xl bg-linear-to-br text-lg font-black text-white shadow-lg">
+                <span className="from-brand-500 to-accent-500 shadow-brand-500/25 relative grid size-11 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-lg font-black text-white shadow-lg">
                   {index + 1}
                 </span>
-                <div>
+                <div className="min-w-0">
                   <h3 className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                     <Icon
                       name={step.icon}
-                      className="text-brand-500 dark:text-brand-300 size-4"
+                      className="text-brand-500 dark:text-brand-300 size-4 shrink-0"
                     />
                     {step.title}
                   </h3>
@@ -75,7 +75,7 @@ export function QuickStart() {
                   </p>
                 </div>
               </div>
-              <div className="mt-auto">
+              <div className="mt-0">
                 <code-block code={step.code} filename={step.filename} />
               </div>
             </div>

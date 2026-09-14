@@ -39,7 +39,7 @@ export class NavbarElement extends LitElement {
   private menuRef = createRef<HTMLDivElement>();
   private iconRef = createRef<HTMLSpanElement>();
   private unsubscribeTheme?: () => void;
-  private desktopMedia = window.matchMedia("(min-width: 1024px)");
+  private desktopMedia = window.matchMedia("(min-width: 1280px)");
 
   private handleScroll = () => {
     this.scrolled = window.scrollY > 12;
@@ -129,7 +129,7 @@ export class NavbarElement extends LitElement {
         <nav className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-5 sm:px-8">
           <Logo />
 
-          <div className="ml-6 hidden items-center gap-1 lg:flex">
+          <div className="ml-6 hidden items-center gap-1 xl:flex">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
@@ -149,7 +149,7 @@ export class NavbarElement extends LitElement {
               type="button"
               onClick={() => themeStore.toggle()}
               aria-label="Toggle color theme"
-              className="hover:border-brand-400/50 hover:text-brand-600 dark:hover:text-brand-200 relative grid size-9 place-items-center overflow-hidden rounded-xl border border-slate-900/10 text-slate-600 transition dark:border-white/10 dark:text-slate-300"
+              className="hover:border-brand-400/50 hover:text-brand-600 dark:hover:text-brand-200 relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-xl border border-slate-900/10 text-slate-600 transition dark:border-white/10 dark:text-slate-300"
             >
               <span ref={this.iconRef} className="grid place-items-center">
                 <Icon
@@ -164,7 +164,7 @@ export class NavbarElement extends LitElement {
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub repository"
-              className="hover:border-brand-400/50 hover:text-brand-600 dark:hover:text-brand-200 hidden size-9 place-items-center rounded-xl border border-slate-900/10 text-slate-600 transition sm:grid dark:border-white/10 dark:text-slate-300"
+              className="hover:border-brand-400/50 hover:text-brand-600 dark:hover:text-brand-200 hidden size-10 shrink-0 place-items-center rounded-xl border border-slate-900/10 text-slate-600 transition sm:grid dark:border-white/10 dark:text-slate-300"
             >
               <GithubIcon className="size-4.5" />
             </a>
@@ -179,7 +179,7 @@ export class NavbarElement extends LitElement {
               Get started
               <Icon
                 name="arrow-right"
-                className="size-4 transition-transform group-hover:translate-x-0.5"
+                className="size-4 shrink-0 transition-transform group-hover:translate-x-0.5"
               />
             </a>
 
@@ -187,7 +187,7 @@ export class NavbarElement extends LitElement {
               type="button"
               onClick={() => this.toggleMenu()}
               aria-label="Toggle navigation menu"
-              className="grid size-10 place-items-center rounded-xl border border-slate-900/10 text-slate-600 lg:hidden dark:border-white/10 dark:text-slate-300"
+              className="grid size-10 shrink-0 place-items-center rounded-xl border border-slate-900/10 text-slate-600 xl:hidden dark:border-white/10 dark:text-slate-300"
             >
               <Icon name={this.open ? "x" : "menu"} className="size-5" />
             </button>
@@ -198,7 +198,7 @@ export class NavbarElement extends LitElement {
           ref={this.menuRef}
           aria-hidden={!this.open ? "true" : undefined}
           inert={!this.open}
-          className="dark:bg-ink-950 overflow-hidden border-t border-slate-900/10 bg-white lg:hidden dark:border-white/10"
+          className="dark:bg-ink-950 overflow-hidden border-t border-slate-900/10 bg-white xl:hidden dark:border-white/10"
         >
           <div className="space-y-1 px-5 py-4">
             {NAV_LINKS.map((link) => (

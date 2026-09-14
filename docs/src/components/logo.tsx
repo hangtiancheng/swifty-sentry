@@ -7,7 +7,7 @@ export function Logo({ compact = false }: { readonly compact?: boolean }) {
       className="group flex items-center gap-2.5"
       aria-label="Swifty Sentry home"
     >
-      <span className="from-brand-400 via-brand-500 to-accent-500 shadow-brand-500/30 relative grid size-9 place-items-center rounded-xl bg-linear-to-br shadow-lg transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-6">
+      <span className="from-brand-400 via-brand-500 to-accent-500 shadow-brand-500/30 relative grid size-9 shrink-0 place-items-center rounded-xl bg-linear-to-br shadow-lg transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-6">
         <span className="absolute inset-0 rounded-xl bg-linear-to-br from-white/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <Icon
           name="bug"
